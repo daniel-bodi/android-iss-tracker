@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -20,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -30,12 +33,19 @@ import com.google.android.gms.location.Priority;
 
 import java.util.Locale;
 
+import dev.bodid.isstracker.BuildConfig;
 import dev.bodid.isstracker.R;
+import dev.bodid.isstracker.pass.api.PassApiClient;
+import dev.bodid.isstracker.pass.model.PassResponse;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PassFragment extends Fragment {
 
     private FusedLocationProviderClient fusedLocationClient;
     private TextView coordsTextView;
+    private RecyclerView recyclerView;
     private double userLat = Double.NaN;
     private double userLon = Double.NaN;
 
@@ -62,8 +72,10 @@ public class PassFragment extends Fragment {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
         coordsTextView = view.findViewById(R.id.coords_text_view);
-        Button locationButton = view.findViewById(R.id.location_button);
+        recyclerView = view.findViewById(R.id.pass_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
+        Button locationButton = view.findViewById(R.id.location_button);
         locationButton.setOnClickListener(v -> requestLocation());
     }
 
@@ -72,6 +84,7 @@ public class PassFragment extends Fragment {
         super.onDestroyView();
         stopLocationUpdates();
         coordsTextView = null;
+        recyclerView = null;
     }
 
     private void requestLocation() {
@@ -117,6 +130,38 @@ public class PassFragment extends Fragment {
         if (coordsTextView != null) {
             coordsTextView.setText(String.format(Locale.US, "%.4f°, %.4f°", lat, lon));
         }
+        fetchPasses();
+    }
+
+    private void fetchPasses() {
+        PassApiClient.getApiService()
+                .getPasses(userLat, userLon, BuildConfig.N2YO_API_KEY)
+                .enqueue(new Callback<PassResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<PassResponse> call, @NonNull Response<PassResponse> response) {
+                        if (!response.isSuccessful()) {
+                            Toast.makeText(getContext(), "API hiba: " + response.code(), Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if (response.body() == null || response.body().getPasses() == null || response.body().getPasses().isEmpty()) {
+                            Toast.makeText(getContext(), "Nincs átrepülés a következő 5 napban", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        showPasses(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<PassResponse> call, @NonNull Throwable t) {
+                        Toast.makeText(getContext(), "Hálózati hiba: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void showPasses(PassResponse response) {
+        if (recyclerView == null) {
+            return;
+        }
+        recyclerView.setAdapter(new PassAdapter(response.getPasses()));
     }
 
     private void showManualInputDialog() {
