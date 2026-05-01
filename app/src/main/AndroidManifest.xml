@@ -29,14 +29,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".CrewActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".PassActivity"
-            android:exported="false" />
-
     </application>
 
 </manifest>
