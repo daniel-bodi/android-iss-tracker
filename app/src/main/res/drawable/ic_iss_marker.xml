@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="56dp"
+    android:height="56dp"
+    android:viewportWidth="56"
+    android:viewportHeight="56">
+
+    <!-- Outer glow -->
+    <path
+        android:fillColor="#5000C8FF"
+        android:pathData="M28,28m-27,0a27,27 0,1 1,54 0a27,27 0,1 1,-54 0"/>
+
+    <!-- Dark background -->
+    <path
+        android:fillColor="#EE08101C"
+        android:pathData="M28,28m-23,0a23,23 0,1 1,46 0a23,23 0,1 1,-46 0"/>
+
+    <!-- Main truss -->
+    <path
+        android:fillColor="#E1E8F0"
+        android:pathData="M5,26 L51,26 L51,30 L5,30 Z"/>
+
+    <!-- Solar panels left top -->
+    <path
+        android:fillColor="#29B6F6"
+        android:pathData="M5,18 L20,18 L20,24 L5,24 Z"/>
+
+    <!-- Solar panels left bottom -->
+    <path
+        android:fillColor="#29B6F6"
+        android:pathData="M5,32 L20,32 L20,38 L5,38 Z"/>
+
+    <!-- Solar panels right top -->
+    <path
+        android:fillColor="#29B6F6"
+        android:pathData="M36,18 L51,18 L51,24 L36,24 Z"/>
+
+    <!-- Solar panels right bottom -->
+    <path
+        android:fillColor="#29B6F6"
+        android:pathData="M36,32 L51,32 L51,38 L36,38 Z"/>
+
+    <!-- Central module -->
+    <path
+        android:fillColor="#B0BEC5"
+        android:pathData="M22,17 L34,17 L34,39 L22,39 Z"/>
+
+    <!-- Module window top (cyan) -->
+    <path
+        android:fillColor="#00C8FF"
+        android:pathData="M24,20 L32,20 L32,27 L24,27 Z"/>
+
+    <!-- Module window bottom -->
+    <path
+        android:fillColor="#4DD0E1"
+        android:pathData="M24,29 L32,29 L32,35 L24,35 Z"/>
+
+</vector>

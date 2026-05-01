@@ -14,41 +14,108 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="12dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="6dp">
+        app:cardBackgroundColor="#EE0F1B2D"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:strokeColor="@color/outline"
+        app:strokeWidth="1dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="12dp">
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="12dp">
 
-            <TextView
-                android:id="@+id/lat_text_view"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Lat: –"
-                android:textSize="12sp" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/lon_text_view"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAT"
+                    android:textColor="@color/cyan_primary"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.1" />
+
+                <TextView
+                    android:id="@+id/lat_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="–"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/outline" />
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Lon: –"
-                android:textSize="12sp" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/speed_text_view"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LON"
+                    android:textColor="@color/cyan_primary"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.1" />
+
+                <TextView
+                    android:id="@+id/lon_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="–"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/outline" />
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Seb: –"
-                android:textSize="12sp" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SEBESSÉG"
+                    android:textColor="@color/cyan_primary"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.1" />
+
+                <TextView
+                    android:id="@+id/speed_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="–"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -10,9 +10,11 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/space_navy"
+        android:elevation="4dp"
         app:title="@string/app_name"
-        app:titleTextColor="@android:color/white" />
+        app:titleTextColor="@color/cyan_primary"
+        app:subtitleTextColor="@color/text_secondary" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
@@ -24,6 +26,7 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/space_navy"
         app:menu="@menu/bottom_nav_menu" />
 
 </LinearLayout>

@@ -12,10 +12,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+
+import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -39,6 +47,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private TextView latTextView;
     private TextView lonTextView;
     private TextView speedTextView;
+    private BitmapDescriptor issMarkerIcon;
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final List<LatLng> positionHistory = new ArrayList<>();
@@ -83,6 +92,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(@NonNull GoogleMap map) {
         googleMap = map;
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(0, 0), 2));
+        issMarkerIcon = createIssMarkerIcon();
         startRefreshing();
     }
 
@@ -165,13 +175,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         if (positionHistory.size() > 1) {
             googleMap.addPolyline(new PolylineOptions()
                     .addAll(positionHistory)
-                    .width(4f)
-                    .color(0xFF2196F3));
+                    .width(5f)
+                    .color(0xFF00C8FF));
         }
 
         googleMap.addMarker(new MarkerOptions()
                 .position(position)
-                .title("ISS"));
+                .title("ISS")
+                .icon(issMarkerIcon));
 
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(position));
 
@@ -182,8 +193,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         if (latTextView == null) {
             return;
         }
-        latTextView.setText(String.format(Locale.US, "Lat: %.4f°", data.getLatitude()));
-        lonTextView.setText(String.format(Locale.US, "Lon: %.4f°", data.getLongitude()));
+        latTextView.setText(String.format(Locale.US, "%.4f°", data.getLatitude()));
+        lonTextView.setText(String.format(Locale.US, "%.4f°", data.getLongitude()));
         speedTextView.setText(String.format(Locale.US, "%.0f km/h", data.getVelocity()));
+    }
+
+    private BitmapDescriptor createIssMarkerIcon() {
+        int size = (int) (56 * getResources().getDisplayMetrics().density);
+        Drawable drawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_iss_marker);
+        Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, size, size);
+        drawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 }

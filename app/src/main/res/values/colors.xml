@@ -2,4 +2,16 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Space theme -->
+    <color name="space_dark">#08101C</color>
+    <color name="space_navy">#0F1B2D</color>
+    <color name="space_blue">#192B45</color>
+    <color name="cyan_primary">#00C8FF</color>
+    <color name="cyan_on_primary">#003548</color>
+    <color name="cyan_container">#004E6A</color>
+    <color name="cyan_on_container">#B8EEFF</color>
+    <color name="text_primary">#E1E8F0</color>
+    <color name="text_secondary">#8D9FB5</color>
+    <color name="outline">#263A54</color>
 </resources>
