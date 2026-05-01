@@ -8,9 +8,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -26,6 +28,7 @@ public class CrewFragment extends Fragment {
     private CrewCache cache;
     private TextView headerTextView;
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -42,6 +45,15 @@ public class CrewFragment extends Fragment {
 
         headerTextView = view.findViewById(R.id.header_text_view);
 
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setColorSchemeColors(
+                ContextCompat.getColor(requireContext(), R.color.cyan_primary)
+        );
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(
+                ContextCompat.getColor(requireContext(), R.color.space_navy)
+        );
+        swipeRefreshLayout.setOnRefreshListener(this::loadFromNetwork);
+
         cache = new CrewCache(requireContext());
 
         if (cache.hasCache()) {
@@ -51,10 +63,19 @@ public class CrewFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        headerTextView = null;
+        recyclerView = null;
+        swipeRefreshLayout = null;
+    }
+
     private void loadFromNetwork() {
         CrewApiClient.getApiService().getAstronauts(true).enqueue(new Callback<AstronautsResponse>() {
             @Override
             public void onResponse(@NonNull Call<AstronautsResponse> call, @NonNull Response<AstronautsResponse> response) {
+                stopRefreshing();
                 if (response.isSuccessful() && response.body() != null) {
                     cache.save(response.body());
                     showData(response.body(), false);
@@ -65,12 +86,22 @@ public class CrewFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<AstronautsResponse> call, @NonNull Throwable t) {
+                stopRefreshing();
                 showNetworkError("Nincs kapcsolat");
             }
         });
     }
 
+    private void stopRefreshing() {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
     private void showData(AstronautsResponse data, boolean fromCache) {
+        if (headerTextView == null) {
+            return;
+        }
         String header = "Jelenleg " + data.getCount() + " ember van az űrben";
         if (fromCache) {
             String date = DateFormat.getDateTimeInstance().format(new Date(cache.getTimestamp()));
@@ -81,7 +112,7 @@ public class CrewFragment extends Fragment {
     }
 
     private void showNetworkError(String message) {
-        if (!cache.hasCache()) {
+        if (!cache.hasCache() && headerTextView != null) {
             headerTextView.setText(message);
         }
     }
