@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import dev.bodid.isstracker.crew.CrewFragment;
+
 public class MainActivity extends AppCompatActivity {
 
     private MapFragment mapFragment;

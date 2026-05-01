@@ -1,4 +1,4 @@
-package dev.bodid.isstracker;
+package dev.bodid.isstracker.crew;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +13,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import dev.bodid.isstracker.model.Astronaut;
-import dev.bodid.isstracker.model.Nationality;
+import dev.bodid.isstracker.R;
+import dev.bodid.isstracker.crew.model.Astronaut;
+import dev.bodid.isstracker.crew.model.Nationality;
 
 public class AstronautAdapter extends RecyclerView.Adapter<AstronautAdapter.ViewHolder> {
 

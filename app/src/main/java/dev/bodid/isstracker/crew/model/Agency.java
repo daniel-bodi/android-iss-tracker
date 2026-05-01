@@ -1,4 +1,4 @@
-package dev.bodid.isstracker.model;
+package dev.bodid.isstracker.crew.model;
 
 import com.google.gson.annotations.SerializedName;
 
