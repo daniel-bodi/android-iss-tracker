@@ -9,12 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
-import dev.bodid.isstracker.model.Astronaut;
 import dev.bodid.isstracker.model.AstronautsResponse;
-import dev.bodid.isstracker.model.Nationality;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,55 +28,32 @@ public class CrewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView textView = view.findViewById(R.id.crew_text_view);
-        loadCrew(textView);
+
+        RecyclerView recyclerView = view.findViewById(R.id.crew_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        TextView headerTextView = view.findViewById(R.id.header_text_view);
+
+        loadCrew(recyclerView, headerTextView);
     }
 
-    private void loadCrew(TextView textView) {
+    private void loadCrew(RecyclerView recyclerView, TextView headerTextView) {
         ApiClient.getCrewApiService().getAstronauts(true).enqueue(new Callback<AstronautsResponse>() {
             @Override
             public void onResponse(@NonNull Call<AstronautsResponse> call, @NonNull Response<AstronautsResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    displayCrew(textView, response.body());
+                    AstronautsResponse data = response.body();
+                    headerTextView.setText("Jelenleg " + data.getCount() + " ember van az űrben");
+                    recyclerView.setAdapter(new AstronautAdapter(data.getResults()));
                 } else {
-                    textView.setText("Hiba: " + response.code());
+                    headerTextView.setText("Hiba: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<AstronautsResponse> call, @NonNull Throwable t) {
-                textView.setText("Kapcsolódási hiba: " + t.getMessage());
+                headerTextView.setText("Kapcsolódási hiba: " + t.getMessage());
             }
         });
-    }
-
-    private void displayCrew(TextView textView, AstronautsResponse data) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Jelenleg ").append(data.getCount()).append(" ember van az űrben:\n\n");
-
-        for (Astronaut astronaut : data.getResults()) {
-            sb.append("• ").append(astronaut.getName()).append("\n");
-
-            if (astronaut.getAgency() != null) {
-                sb.append("  Ügynökség: ").append(astronaut.getAgency().getName()).append("\n");
-            }
-
-            List<Nationality> nationalities = astronaut.getNationality();
-            if (nationalities != null && !nationalities.isEmpty()) {
-                sb.append("  Nemzetiség: ");
-                for (int i = 0; i < nationalities.size(); i++) {
-                    if (i > 0) {
-                        sb.append(", ");
-                    }
-                    sb.append(nationalities.get(i).getName());
-                }
-                sb.append("\n");
-            }
-
-            sb.append("  Repülések száma: ").append(astronaut.getFlightsCount()).append("\n");
-            sb.append("\n");
-        }
-
-        textView.setText(sb.toString());
     }
 }

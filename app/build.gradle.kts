@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.play.services.location)
     implementation(libs.play.services.maps)
+    implementation(libs.glide)
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
