@@ -11,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import dev.bodid.isstracker.crew.CrewFragment;
 import dev.bodid.isstracker.map.MapFragment;
+import dev.bodid.isstracker.pass.PassFragment;
 
 public class MainActivity extends AppCompatActivity {
 
