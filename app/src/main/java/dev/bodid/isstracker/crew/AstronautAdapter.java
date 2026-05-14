@@ -65,6 +65,8 @@ public class AstronautAdapter extends RecyclerView.Adapter<AstronautAdapter.View
 
             if (astronaut.getAgency() != null) {
                 agencyTextView.setText(astronaut.getAgency().getName());
+            } else {
+                agencyTextView.setText("");
             }
 
             List<Nationality> nationalities = astronaut.getNationality();
@@ -77,6 +79,8 @@ public class AstronautAdapter extends RecyclerView.Adapter<AstronautAdapter.View
                     sb.append(nationalities.get(i).getName());
                 }
                 nationalityTextView.setText(sb.toString());
+            } else {
+                nationalityTextView.setText("");
             }
 
             flightsTextView.setText("Repülések: " + astronaut.getFlightsCount());
