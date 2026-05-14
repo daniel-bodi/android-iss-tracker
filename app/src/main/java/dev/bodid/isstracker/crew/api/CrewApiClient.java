@@ -1,6 +1,5 @@
-package dev.bodid.isstracker.crew;
+package dev.bodid.isstracker.crew.api;
 
-import dev.bodid.isstracker.crew.api.CrewApiService;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

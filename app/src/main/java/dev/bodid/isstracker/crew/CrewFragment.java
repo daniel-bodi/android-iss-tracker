@@ -18,6 +18,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import dev.bodid.isstracker.R;
+import dev.bodid.isstracker.crew.api.CrewApiClient;
 import dev.bodid.isstracker.crew.model.AstronautsResponse;
 import retrofit2.Call;
 import retrofit2.Callback;

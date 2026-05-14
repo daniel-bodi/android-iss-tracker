@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Locale;
 
 import dev.bodid.isstracker.R;
+import dev.bodid.isstracker.map.api.IssApiClient;
 import dev.bodid.isstracker.map.model.IssNowResponse;
 import retrofit2.Call;
 import retrofit2.Callback;

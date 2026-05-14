@@ -1,6 +1,5 @@
-package dev.bodid.isstracker.map;
+package dev.bodid.isstracker.map.api;
 
-import dev.bodid.isstracker.map.api.IssApiService;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
