@@ -1,4 +1,4 @@
-package dev.bodid.isstracker.crew;
+package dev.bodid.isstracker.crew.cache;
 
 import android.content.Context;
 import android.content.SharedPreferences;
