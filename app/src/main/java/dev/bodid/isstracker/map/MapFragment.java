@@ -41,7 +41,7 @@ import retrofit2.Response;
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private static final int REFRESH_INTERVAL_MS = 5000;
-    private static final int MAX_HISTORY_SIZE = 20;
+    private static final int MAX_HISTORY_SIZE = 1100;
 
     private GoogleMap googleMap;
     private TextView latTextView;
